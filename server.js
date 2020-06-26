@@ -22,9 +22,14 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
     })
 
 
-    app.get('/:username', function (req, res){
+    app.post('/:username', function (req, res){
         usersCollection.findOne({username : req.params.username})
-        .then((result) => { res.send(result) })
+        .then((result) => { 
+            if(result.password === req.body.password){
+                res.send(result);
+            }
+            res.status(400).send();
+        })
         .catch(console.log(err));
     })
 
@@ -33,22 +38,3 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
     })
 
 });
-
-/*
-var mongo = require('mongodb');
-
-
-var MongoClient = mongo.MongoClient;
-var url = "mongodb://localhost:27017/";
-
-MongoClient.connect(url, { useUnifiedTopology: true }, function(err, db){
-    if(err) throw err;
-    var dbo = db.db('mydb');
-    var myobj = { name: 'Senay' , address : 'Real Nigga Town'};
-    dbo.collection("customers").insertOne(myobj, function(err, res){
-        if(err) throw err;
-        console.log("REAL NIGGA TOWN STAND UP");
-        db.close();
-    });
-});
-*/
