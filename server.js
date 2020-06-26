@@ -30,7 +30,7 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
             }
             res.status(400).send();
         })
-        .catch(console.log(err));
+        .catch(res.status(400).send());
     })
 
     app.listen(4001, () => {
