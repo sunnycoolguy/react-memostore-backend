@@ -24,13 +24,12 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
 
     app.post('/:username', function (req, res){
         usersCollection.findOne({username : req.params.username})
-        .then((result) => { 
+        .then((error) => {res.status(400).send()}, (result) => { 
             if(result.password === req.body.password){
                 res.send(result);
             }
             res.status(400).send();
-        })
-        .catch(res.status(400).send());
+        });
     })
 
     app.listen(4001, () => {
