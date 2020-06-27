@@ -19,7 +19,7 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
         const newDoc = {_id: req.body.username, password: req.body.password, memo: req.body.memo};
         usersCollection.insertOne(newDoc)
         .then(res.send('Success')) 
-        .catch(err => console.log(error)); 
+        .catch(err => console.log(err)); 
     })
 
 
@@ -31,7 +31,7 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
             }
             res.status(400).send();
         })
-        .catch((error) => {res.status(400).send()});
+        .catch((error) => {res.status(400).send(error)});
     })
 
     app.listen(4001, () => {
