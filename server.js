@@ -16,20 +16,22 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
     
     
     app.post('/', function (req, res){
-        usersCollection.insertOne(req.body)
-        .then(res.send('hello!')) 
-        .catch(err => console.log(error));
+        const newDoc = {_id: req.body.username, password: req.body.password, memo: req.body.memo};
+        usersCollection.insertOne(newDoc)
+        .then(res.send('Success')) 
+        .catch(err => console.log(error)); 
     })
 
 
     app.post('/:username', function (req, res){
-        usersCollection.findOne({username : req.params.username})
-        .then((error) => {res.status(400).send()}, (result) => { 
+        usersCollection.findOne({ _id: req.params.username })
+        .then((result) => { 
             if(result.password === req.body.password){
                 res.send(result);
             }
             res.status(400).send();
-        });
+        })
+        .catch((error) => {res.status(400).send()});
     })
 
     app.listen(4001, () => {
