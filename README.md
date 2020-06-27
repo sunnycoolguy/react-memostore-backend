@@ -1,0 +1,1 @@
+This repo is for the backend of my MemoStore app. It uses the Express and MongoDB javascript API to expose resources stored on my local MongoDB server. The resource is a user object that contains a memo to be displayed on the front end. `server.js` also contains code to handle pesky CORS.
